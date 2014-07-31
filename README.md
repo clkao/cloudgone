@@ -1,6 +1,6 @@
 cloudgone
 =========
-ec2 server shutdown management tool
+## ec2 server shutdown management tool
 
 This is a simpke tool that attemps to shutdown inactive ec2 instances
 5 minutes before the hour-mark.  This runs on the instance itself,
