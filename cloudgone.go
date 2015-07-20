@@ -5,6 +5,7 @@ import (
   "strings"
   "math"
   "fmt"
+  "flag"
   "os/exec"
   "time"
   "net/http"
@@ -16,13 +17,18 @@ func RoundToHour(minute float64) int {
   return int(math.Ceil(minute / 60)) * 60
 }
 
+var shutdownCmd string
+
 func shutdown() {
-  cmd := exec.Command("halt")
+  cmd := exec.Command("sh", "-c", shutdownCmd)
   out, _ := cmd.Output()
-  fmt.Printf("shutdown: %q\n", out)
+  fmt.Printf("shutdown: %q => %q\n", shutdownCmd, out)
 }
 
 func main() {
+  flag.StringVar(&shutdownCmd, "shutdown", "halt", "command to run on shutdown")
+  flag.Parse()
+
   resp, _ := http.Get("http://169.254.169.254/latest/meta-data/local-ipv4")
   fmt.Println(resp.Header["Last-Modified"])
 
