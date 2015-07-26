@@ -26,7 +26,9 @@ func shutdown() {
 }
 
 func main() {
+  var listenAddress string
   flag.StringVar(&shutdownCmd, "shutdown", "halt", "command to run on shutdown")
+  flag.StringVar(&listenAddress, "listen", "localhost:31337", "command to run on shutdown")
   flag.Parse()
 
   resp, _ := http.Get("http://169.254.169.254/latest/meta-data/local-ipv4")
@@ -54,5 +56,5 @@ func main() {
     Reset( RoundToHour(time.Since(start).Minutes() + float64(ping / 60)) )
   })
 
-  http.ListenAndServe("localhost:31337", nil)
+  http.ListenAndServe(listenAddress, nil)
 }
